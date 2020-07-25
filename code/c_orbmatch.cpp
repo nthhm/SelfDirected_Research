@@ -85,12 +85,12 @@ void featuresMatching()
 	if (validMatches.size() > 10)
 	{
 		cout << validMatches.size() << endl;
-		cout << "����" << endl;
+		cout << "正解" << endl;
 	}
 	else
 	{
 		cout << validMatches.size() << endl;
-		cout << "�s����" << endl;
+		cout << "不正解" << endl;
 	}
 
 	//drawMatches(src, keyPoints1, dist, keyPoints2, validMatches, out);

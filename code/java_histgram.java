@@ -16,10 +16,10 @@ public class Source {
 	
 	public void histgram() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		long start = System.currentTimeMillis();		//�@����X�^�[�g
+		long start = System.currentTimeMillis();		
 		
 		Mat src = Imgcodecs.imread("image1");
-		Mat dist = Imgcodecs.imread("image2");		//�@�摜����
+		Mat dist = Imgcodecs.imread("image2");		
 		
 		if (src== null || dist == null) {
 		      System.out.println("file not existing");
@@ -28,8 +28,8 @@ public class Source {
 		
 		Imgproc.resize(src,src,new Size(400,400));
 		Imgproc.resize(dist,dist,new Size(400,400));	
-		Imgcodecs.imwrite("test1-1.jpg", src);			// �o�͉摜�̕ۑ�
-		Imgcodecs.imwrite("test2-1.jpg", dist);			// �o�͉摜�̕ۑ�
+		Imgcodecs.imwrite("test1-1.jpg", src);		
+		Imgcodecs.imwrite("test2-1.jpg", dist);			
 		
 		src= myEqualizeHist(src);
 		dist= myEqualizeHist(dist);
@@ -54,13 +54,13 @@ public class Source {
 		 
 		 System.out.println(histList);
 	        if(histList.get(0)>=0.8) {
-	        	System.out.println("����");
+	        	System.out.println("正解");
 	        }
 	        else {
-	        	System.out.println("�s����");
+	        	System.out.println("不正解");
 	        }
 		long end = System.currentTimeMillis();
-        System.out.println((end - start)  + "ms");		//�@����I��
+        System.out.println((end - start)  + "ms");		
 	} 
 	
 	public Mat myEqualizeHist(final Mat src) {
@@ -83,11 +83,11 @@ public class Source {
 	
   public static void main(String[] args) {
     System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    System.out.println("�����J�n");
+    System.out.println("処理開始");
     
     	new Source().histgram();
     	
-    System.out.println("�����I��");
+    System.out.println("処理終了");
   }
 }
 
