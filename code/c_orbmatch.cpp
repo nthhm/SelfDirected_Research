@@ -15,7 +15,7 @@ using namespace std;
 
 static const pair<double, double> SIZE = make_pair(400, 400);
 
-void featuresMatching();										//�����_�}�b�`���O�֐�
+void featuresMatching();										//特徴点マッチング関数
 Mat myEqualizeHist(const Mat& src);
 
 int main()
@@ -29,10 +29,10 @@ int main()
 
 void featuresMatching()
 {
-	int64 start = getTickCount();			//����X�^�[�g	
+	int64 start = getTickCount();			//測定スタート
 
 
-	//�摜�ǂݍ���
+	//画像読み込み
 	Mat src = imread("image1");
 	Mat dist = imread("image2");
 	Mat out;
@@ -44,28 +44,28 @@ void featuresMatching()
 		return;
 	}
 
-	//�C�ӂ�SIZE�Ƀ��T�C�Y
+	//任意のサイズにリサイズ
 	resize(src, src, cv::Size(), SIZE.first / src.cols, SIZE.second / src.rows);
 	resize(dist, dist, cv::Size(), SIZE.first / dist.cols, SIZE.second / dist.rows);
 
-	//���x���ω�
+	//明度平均化
 	src = myEqualizeHist(src);
 	dist = myEqualizeHist(dist);
 
-	//�O���C�X�P�[��
+	//グレイスケール
 	cvtColor(src, src, CV_BGR2GRAY);
 	cvtColor(dist, dist, CV_BGR2GRAY);
 
-	//�����_���X�g�Ɠ����ʕϐ��錾
+	//特徴点リストと特徴量変数宣言
 	vector<KeyPoint> keyPoints1, keyPoints2;
 	Mat descriptor1, descriptor2;
 
-	//ORB�����_���o
+	//ORB特徴点検出
 	auto orb = ORB::create();
 	orb->detectAndCompute(src, Mat(), keyPoints1, descriptor1);
 	orb->detectAndCompute(dist, Mat(), keyPoints2, descriptor2);
 
-	//�����_�}�b�`���O�i�����_���ɏ��2�g�j
+	//特徴点マッチング（特徴点毎に上位2組）
 	auto matcher = DescriptorMatcher::create("BruteForce-Hamming");
 	vector<vector<DMatch>> matches;
 	matcher->knnMatch(descriptor1, descriptor2, matches, 2);
@@ -74,14 +74,14 @@ void featuresMatching()
 	double thresholdRatio = 0.6;
 	for (auto& match : matches)
 	{
-		//1�ʂ̓����ʂ�2�ʂ�0.6�{��菬������΁i�������قǗǂ��j�̗p
+		//1位の特徴量が2位の0.6倍より小さければ（小さいほど良い）採用
 		if (match[0].distance < thresholdRatio*match[1].distance)
 		{
 			validMatches.push_back(match[0]);
 		}
 	}
 
-	//�̗p���ꂽ�����_�̑g��10�ȏ�Ȃ�
+	//採用された特徴点の組が10個以上なら
 	if (validMatches.size() > 10)
 	{
 		cout << validMatches.size() << endl;

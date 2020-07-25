@@ -15,7 +15,7 @@ using namespace std;
 
 static const pair<double, double> SIZE = make_pair(400, 400);
 
-void histgram();												//�q�X�g�O�����֐�
+void histgram();												//ヒストグラム関数
 Mat myEqualizeHist(const Mat& src);
 vector<Mat> myCalcHist(const Mat& src);
 void dispHist(const string windowName, const vector<Mat>& histList);
@@ -31,11 +31,11 @@ int main()
 
 void histgram()
 {
-	int64 start = getTickCount();			//����X�^�[�g
+	int64 start = getTickCount();			//測定スタート
 
 
 	Mat src = imread("image1");
-	Mat dist = imread("image2");		//�摜����
+	Mat dist = imread("image2");		//画像入力
 	vector<Mat> srcHist, distHist;
 
 	if (!src.data || !dist.data)
@@ -48,7 +48,7 @@ void histgram()
 	resize(dist, dist, cv::Size(), SIZE.first / dist.cols, SIZE.second / dist.rows);
 	
 	src = myEqualizeHist(src);
-	dist = myEqualizeHist(dist);					//Mat�^�ϐ��ɔ�ԁ�
+	dist = myEqualizeHist(dist);					//Mat型変数に飛ぶ
 
 	cvtColor(src, src, CV_BGR2GRAY);
 	cvtColor(dist, dist, CV_BGR2GRAY);
