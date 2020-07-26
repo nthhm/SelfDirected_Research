@@ -1,2 +1,2 @@
-SelfDirected_Research
-  3年時自主探究にて使用したプログラム
+SelfDirected_Research  
+3年時自主探究にて使用したプログラム
